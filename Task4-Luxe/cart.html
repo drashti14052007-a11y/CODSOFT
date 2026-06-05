@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart — LUXE</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-wrap {
+      display:grid; grid-template-columns:1fr 300px;
+      gap:48px; padding:60px 64px;
+      max-width:1200px; margin:0 auto; align-items:start;
+    }
+    .cart-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.2rem; font-weight:400; margin-bottom:28px;
+    }
+    .cart-item {
+      display:flex; align-items:center; gap:20px;
+      padding:18px 20px; border:1px solid #eee;
+      margin-bottom:14px; background:var(--off-white);
+    }
+    .cart-item img { width:84px; height:105px; object-fit:cover; flex-shrink:0; background:var(--gray-light); }
+    .cart-item-info { flex:1; }
+    .cart-item-name { font-size:0.75rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+    .cart-item-meta { font-size:0.68rem; letter-spacing:1px; color:var(--gray); text-transform:uppercase; margin-bottom:8px; }
+    .cart-item-price { color:var(--gold); font-size:0.85rem; font-weight:500; }
+    .remove-btn { background:none; border:none; color:#ccc; font-size:1rem; cursor:pointer; transition:color 0.2s; }
+    .remove-btn:hover { color:#e55; }
+    .order-summary { background:var(--gray-light); padding:28px; position:sticky; top:80px; }
+    .order-summary h3 { font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:20px; }
+    .summary-row { display:flex; justify-content:space-between; font-size:0.76rem; margin-bottom:12px; color:#555; }
+    .summary-row.shipping .val { color:var(--gold); font-weight:600; }
+    .summary-row.total { border-top:1px solid #ddd; padding-top:14px; margin-top:4px; font-weight:700; font-size:0.86rem; color:var(--black); }
+    .summary-row.total .val { color:var(--gold); }
+    .checkout-btn {
+      width:100%; background:var(--black); color:var(--white);
+      border:none; padding:15px;
+      font-family:'Montserrat',sans-serif; font-size:0.72rem;
+      font-weight:600; letter-spacing:2px; text-transform:uppercase;
+      cursor:pointer; margin-top:18px; transition:background 0.2s;
+    }
+    .checkout-btn:hover { background:#333; }
+    .secure-note { text-align:center; font-size:0.62rem; letter-spacing:1px; color:var(--gray); margin-top:8px; }
+    .empty-cart { text-align:center; padding:80px 0; grid-column:1/-1; }
+    .empty-cart p { font-size:1rem; color:var(--gray); margin-bottom:24px; }
+    .explore-section { padding:0 64px 60px; }
+    .explore-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2rem; font-weight:400; letter-spacing:3px;
+      text-transform:uppercase; margin-bottom:32px;
+    }
+    @media(max-width:768px){
+      .cart-wrap{ grid-template-columns:1fr; padding:32px 20px; }
+      .explore-section{ padding:0 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">LUXE</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="cart.html" class="nav-cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="cart-wrap" id="cart-wrap"></div>
+
+<section class="explore-section">
+  <h2 class="explore-title">EXPLORE MORE &gt;</h2>
+  <div class="product-grid" id="explore-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+</section>
+
+<footer><p>© 2025 Luxe. All rights reserved.</p></footer>
+
+<script src="app.js"></script>
+<script>
+  function renderCart() {
+    const cart = getCart();
+    const wrap = document.getElementById('cart-wrap');
+    wrap.innerHTML = '';
+    if (cart.length === 0) {
+      wrap.innerHTML = `<div class="empty-cart"><p>Your cart is empty.</p><a href="shop.html" class="btn-primary">Continue Shopping</a></div>`;
+      return;
+    }
+    const total = getCartTotal();
+    const itemCount = cart.reduce((s,i)=>s+i.quantity,0);
+    const left = document.createElement('div');
+    left.innerHTML = `<h1 class="cart-title">My Cart (${itemCount} item${itemCount!==1?'s':''})</h1>`;
+    cart.forEach(item => {
+      const p = PRODUCTS.find(pr=>pr.id===item.id); if(!p) return;
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <div class="cart-item-info">
+          <p class="cart-item-name">${p.name}</p>
+          <p class="cart-item-meta">${p.category==='shoes'?'Size':'Size'}: ${item.size} &nbsp;|&nbsp; Qty: ${item.quantity}</p>
+          <p class="cart-item-price">$${p.price}.00</p>
+        </div>
+        <button class="remove-btn" data-id="${p.id}" data-size="${item.size}" title="Remove">✕</button>
+      `;
+      left.appendChild(div);
+    });
+    const right = document.createElement('div');
+    right.className = 'order-summary';
+    right.innerHTML = `
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span class="val">$${total}.00</span></div>
+      <div class="summary-row shipping"><span>Shipping</span><span class="val">Free</span></div>
+      <div class="summary-row total"><span>Total</span><span class="val">$${total}.00</span></div>
+      <button class="checkout-btn">Proceed to Checkout →</button>
+      <p class="secure-note">🔒 Secure Checkout</p>
+    `;
+    wrap.appendChild(left);
+    wrap.appendChild(right);
+    document.querySelectorAll('.remove-btn').forEach(b => b.addEventListener('click', ()=>{
+      removeFromCart(parseInt(b.dataset.id), b.dataset.size); renderCart();
+    }));
+    document.querySelector('.checkout-btn').addEventListener('click', ()=>{
+      alert('Thank you for shopping at LUXE! ✨\nYour order is being processed.');
+    });
+  }
+
+  renderCart();
+  const explore = document.getElementById('explore-grid');
+  [...PRODUCTS].sort(()=>0.5-Math.random()).slice(0,6).forEach(p=>explore.appendChild(renderCard(p)));
+</script>
+</body>
+</html>
