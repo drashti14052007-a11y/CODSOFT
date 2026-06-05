@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — LUXE</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .detail-wrap {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:64px; padding:60px 64px;
+      max-width:1200px; margin:0 auto; align-items:start;
+    }
+    .detail-img { width:100%; aspect-ratio:3/4; object-fit:cover; background:var(--gray-light); }
+    .detail-info h1 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.4rem; font-weight:400; margin-bottom:12px;
+    }
+    .detail-price { color:var(--gold); font-size:1.4rem; font-weight:500; margin-bottom:18px; }
+    .detail-desc { font-size:0.78rem; line-height:1.85; color:#555; margin-bottom:26px; }
+    .select-label { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:10px; display:block; }
+    .size-options { display:flex; gap:10px; margin-bottom:26px; }
+    .size-btn {
+      width:44px; height:44px;
+      border:1.5px solid #ccc; background:var(--white);
+      font-family:'Montserrat',sans-serif; font-size:0.72rem;
+      cursor:pointer; transition:all 0.2s;
+    }
+    .size-btn.active,.size-btn:hover { background:var(--black); color:var(--white); border-color:var(--black); }
+    .qty-row { display:flex; align-items:center; gap:28px; margin-bottom:26px; }
+    .qty-label { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; font-weight:600; }
+    .qty-controls { display:flex; align-items:center; gap:14px; }
+    .qty-btn {
+      width:36px; height:36px; border-radius:50%; border:none;
+      cursor:pointer; font-size:1rem; font-weight:700; transition:opacity 0.2s;
+    }
+    .qty-btn.plus { background:var(--black); color:var(--white); }
+    .qty-btn.minus { background:#eee; color:var(--black); }
+    .qty-btn:hover { opacity:0.75; }
+    #qty-display { font-size:0.88rem; min-width:20px; text-align:center; font-weight:600; }
+    .action-row { display:flex; gap:14px; margin-bottom:28px; flex-wrap:wrap; }
+    .divider { border:none; border-top:1px solid #eee; margin:20px 0; }
+    .meta-row {
+      font-size:0.68rem; letter-spacing:1px; color:var(--gray);
+      display:flex; gap:20px; flex-wrap:wrap; margin-bottom:14px;
+      text-transform:uppercase;
+    }
+    .share-row { display:flex; align-items:center; gap:14px; margin:16px 0; flex-wrap:wrap; }
+    .share-label { font-size:0.66rem; letter-spacing:2px; text-transform:uppercase; font-weight:600; }
+    .share-btn {
+      padding:8px 18px; border:1.5px solid var(--black); background:transparent;
+      font-family:'Montserrat',sans-serif; font-size:0.66rem;
+      letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:all 0.2s;
+    }
+    .share-btn:hover { background:var(--black); color:var(--white); }
+    .rating-box { border:1px solid #ddd; padding:20px 28px; margin-top:22px; text-align:center; }
+    .rating-box .big-num {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2rem; font-weight:400; margin-bottom:6px;
+    }
+    .stars { color:#f5a623; font-size:1rem; letter-spacing:4px; }
+    .review-count { font-size:0.66rem; letter-spacing:1px; color:var(--gray); margin-top:4px; }
+    .see-more { padding:60px 64px; }
+    .see-more-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.2rem; font-weight:400; letter-spacing:2px; margin-bottom:32px;
+    }
+    #toast {
+      position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
+      background:var(--black); color:var(--white);
+      padding:14px 28px; font-size:0.72rem; letter-spacing:1px;
+      display:none; z-index:999; border-radius:2px;
+    }
+    @media(max-width:768px){
+      .detail-wrap{ grid-template-columns:1fr; padding:32px 20px; gap:28px; }
+      .see-more{ padding:40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">LUXE</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="cart.html" class="nav-cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="detail-wrap" id="detail-wrap"></div>
+
+<section class="see-more">
+  <h2 class="see-more-title">SEE MORE &gt;</h2>
+  <div class="product-grid" id="see-more-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+</section>
+
+<footer><p>© 2025 Luxe. All rights reserved.</p></footer>
+<div id="toast">Added to cart ✓</div>
+
+<script src="app.js"></script>
+<script>
+  const id = parseInt(new URLSearchParams(location.search).get('id')) || 9;
+  const product = PRODUCTS.find(p=>p.id===id) || PRODUCTS[8];
+  let selectedSize = 'S', qty = 1;
+  document.title = product.name + ' — LUXE';
+
+  document.getElementById('detail-wrap').innerHTML = `
+    <div><img class="detail-img" src="${product.img}" alt="${product.name}"></div>
+    <div class="detail-info">
+      <h1>${product.name}</h1>
+      <p class="detail-price">$${product.price}.00</p>
+      <p class="detail-desc">${product.desc}</p>
+      <span class="select-label">Select Size</span>
+      <div class="size-options" id="size-opts">
+        ${['S','M','L','XL'].map(s=>`<button class="size-btn${s==='S'?' active':''}" data-size="${s}">${s}</button>`).join('')}
+      </div>
+      <div class="qty-row">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-controls">
+          <button class="qty-btn plus" id="qplus">+</button>
+          <span id="qty-display">1</span>
+          <button class="qty-btn minus" id="qminus">−</button>
+        </div>
+      </div>
+      <div class="action-row">
+        <button class="btn-primary" id="add-btn">Add to Cart 🛒</button>
+        <button class="btn-outline" onclick="location.href='cart.html'">BUY IT NOW</button>
+      </div>
+      <hr class="divider">
+      <div class="meta-row">
+        <span>SKU: ${product.sku}</span>
+        <span>Tags: ${product.tags.join(', ')}</span>
+        <span>${product.rating} from ${product.reviews} reviews</span>
+      </div>
+      <div class="share-row">
+        <span class="share-label">Share</span>
+        <button class="share-btn" onclick="navigator.share?navigator.share({title:'${product.name}',url:location.href}):alert('Copy the URL to share!')">INSTAGRAM</button>
+        <span style="font-size:0.66rem;color:var(--gray);letter-spacing:1px">OR</span>
+        <button class="share-btn" onclick="window.open('https://facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href))">FACEBOOK</button>
+      </div>
+      <div class="rating-box">
+        <p class="big-num">${product.rating} OUT OF 5</p>
+        <p class="stars">${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5-Math.round(product.rating))}</p>
+        <p class="review-count">(${product.reviews} REVIEWS)</p>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', ()=>{
+    document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); selectedSize = b.dataset.size;
+  }));
+  document.getElementById('qplus').addEventListener('click', ()=>{ qty++; document.getElementById('qty-display').textContent=qty; });
+  document.getElementById('qminus').addEventListener('click', ()=>{ if(qty>1){ qty--; document.getElementById('qty-display').textContent=qty; } });
+  document.getElementById('add-btn').addEventListener('click', ()=>{
+    addToCart(product.id, selectedSize, qty);
+    const t=document.getElementById('toast'); t.style.display='block';
+    setTimeout(()=>t.style.display='none', 2000);
+  });
+
+  // See more
+  PRODUCTS.filter(p=>p.id!==product.id&&p.category===product.category).slice(0,3)
+    .forEach(p=>document.getElementById('see-more-grid').appendChild(renderCard(p)));
+</script>
+</body>
+</html>
