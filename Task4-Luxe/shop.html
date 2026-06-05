@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — LUXE</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .shop-header { text-align:center; padding:56px 64px 28px; }
+    .filters { display:flex; gap:12px; padding:0 64px 40px; flex-wrap:wrap; }
+    .filter-btn {
+      padding:9px 24px;
+      border:1.5px solid var(--black);
+      background:transparent;
+      font-family:'Montserrat',sans-serif;
+      font-size:0.72rem;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:all 0.2s;
+      border-radius:2px;
+    }
+    .filter-btn.active,.filter-btn:hover { background:var(--black); color:var(--white); }
+    .products-section { padding:0 64px 60px; }
+    .promo-row { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+    .promo-card {
+      position:relative; height:260px; overflow:hidden;
+      border-radius:4px; display:flex; align-items:flex-end;
+      padding:28px 32px; cursor:pointer;
+    }
+    .promo-card img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(0.5);
+    }
+    .promo-card-content { position:relative; z-index:2; color:#fff; }
+    .promo-card h3 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.9rem; font-weight:300; letter-spacing:2px;
+    }
+    .promo-card p { font-size:0.7rem; letter-spacing:2px; margin-bottom:14px; opacity:0.85; }
+    .promo-arrow {
+      width:38px; height:38px;
+      border:1.5px solid rgba(255,255,255,0.6);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; color:#fff;
+    }
+    @media(max-width:768px){
+      .shop-header,.filters,.products-section{ padding-left:20px; padding-right:20px; }
+      .promo-row{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">LUXE</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="cart.html" class="nav-cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="shop-header">
+  <h1 class="section-title" style="margin-bottom:0">All Products</h1>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-cat="all">All</button>
+  <button class="filter-btn" data-cat="clothing">Clothing</button>
+  <button class="filter-btn" data-cat="accessories">Accessories</button>
+  <button class="filter-btn" data-cat="shoes">Shoes</button>
+</div>
+
+<section class="products-section">
+  <div class="product-grid" id="shop-grid"></div>
+  <div class="promo-row">
+    <div class="promo-card" onclick="location.href='shop.html?cat=clothing'">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=80" alt="Summer">
+      <div class="promo-card-content">
+        <h3>Summer Collection</h3>
+        <p>Is Live!</p>
+        <div class="promo-arrow">›</div>
+      </div>
+    </div>
+    <div class="promo-card" onclick="location.href='shop.html'">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80" alt="Sale">
+      <div class="promo-card-content">
+        <h3>Flash 50% OFF SALE</h3>
+        <p>TILL 30th June</p>
+        <div class="promo-arrow">🛍</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>© 2025 Luxe. All rights reserved.</p></footer>
+
+<script src="app.js"></script>
+<script>
+  let activeFilter = new URLSearchParams(location.search).get('cat') || 'all';
+
+  function renderGrid() {
+    const grid = document.getElementById('shop-grid');
+    grid.innerHTML = '';
+    const list = activeFilter==='all' ? PRODUCTS : PRODUCTS.filter(p=>p.category===activeFilter);
+    list.slice(0,8).forEach(p => grid.appendChild(renderCard(p)));
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat===activeFilter));
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.addEventListener('click', () => { activeFilter = b.dataset.cat; renderGrid(); });
+  });
+  renderGrid();
+</script>
+</body>
+</html>
