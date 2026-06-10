@@ -1,0 +1,1370 @@
+/* ============================================================
+   AUTHFLOW — Authentication UI/UX Design System
+   Premium Soft Minimal Air Theme
+   ============================================================ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ============================================================ */
+:root {
+  /* ── Primary Colors ── */
+  --primary-blue: #5B8DEF;
+  --secondary-purple: #AFA5FF;
+  --accent-cyan: #7FE7DC;
+
+  /* ── Background Colors ── */
+  --bg-main: #FAFBFF;
+  --bg-card: #FFFFFF;
+  --bg-surface: #F4F5FF;
+
+  /* ── Text Colors ── */
+  --text-primary: #2D3142;
+  --text-secondary: #6B7280;
+  --text-placeholder: #B0B7C3;
+
+  /* ── Status Colors ── */
+  --success: #4ADE80;
+  --error: #FF6B6B;
+  --warning: #F59E0B;
+
+  /* ── Gradients ── */
+  --gradient-primary: linear-gradient(135deg, #5B8DEF 0%, #AFA5FF 100%);
+  --gradient-accent: linear-gradient(135deg, #7FE7DC 0%, #5B8DEF 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(91,141,239,0.15) 0%, rgba(175,165,255,0.10) 100%);
+
+  /* ── Typography ── */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* ── Border Radius ── */
+  --radius-btn: 16px;
+  --radius-card: 24px;
+  --radius-input: 14px;
+  --radius-otp: 12px;
+  --radius-modal: 28px;
+
+  /* ── Shadows ── */
+  --shadow-soft: 0 8px 30px rgba(91, 141, 239, 0.08);
+  --shadow-float: 0 15px 40px rgba(91, 141, 239, 0.12);
+  --shadow-glow-blue: 0 0 0 4px rgba(91, 141, 239, 0.12);
+  --shadow-glow-error: 0 0 0 4px rgba(255, 107, 107, 0.12);
+  --shadow-glow-success: 0 0 0 4px rgba(74, 222, 128, 0.12);
+
+  /* ── Transitions ── */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.2s var(--ease-smooth);
+  --transition-normal: 0.3s var(--ease-smooth);
+  --transition-slow: 0.5s var(--ease-smooth);
+}
+
+/* ============================================================
+   2. RESET & BASE STYLES
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { max-width: 100%; display: block; }
+a   { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+button { cursor: pointer; }
+
+/* ============================================================
+   3. TYPOGRAPHY CLASSES
+   ============================================================ */
+.heading-hero {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.heading-screen {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.heading-section {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-caption {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   4. LAYOUT — Mobile Shell
+   ============================================================ */
+.app-shell {
+  max-width: 430px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-main);
+}
+
+/* Decorative blobs for depth */
+.app-shell::before,
+.app-shell::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.35;
+  z-index: 0;
+}
+
+.app-shell::before {
+  width: 300px;
+  height: 300px;
+  background: var(--primary-blue);
+  top: -80px;
+  right: -60px;
+}
+
+.app-shell::after {
+  width: 250px;
+  height: 250px;
+  background: var(--secondary-purple);
+  bottom: -50px;
+  left: -70px;
+}
+
+/* ── Screen wrapper ── */
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  padding-top: calc(var(--space-xl) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+}
+
+.screen--center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ============================================================
+   5. BACK BUTTON / NAV BAR
+   ============================================================ */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  min-height: 40px;
+}
+
+.btn-back {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-normal);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+.btn-back:active {
+  transform: scale(0.95);
+}
+
+.btn-back i {
+  font-size: 20px;
+}
+
+.nav-bar .nav-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 17px;
+  margin-right: 44px; /* balance the back button */
+}
+
+/* ============================================================
+   6. AUTH CARD
+   ============================================================ */
+.auth-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-float);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   7. FORM ELEMENTS
+   ============================================================ */
+
+/* ── Input Group (floating label) ── */
+.input-group {
+  position: relative;
+  margin-bottom: var(--space-md);
+}
+
+.input-group input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-input);
+  padding: 22px 16px 10px;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: var(--transition-normal);
+  caret-color: var(--primary-blue);
+}
+
+.input-group input::placeholder {
+  color: transparent; /* hide placeholder when label floats */
+}
+
+.input-group label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--text-placeholder);
+  pointer-events: none;
+  transition: var(--transition-normal);
+  transform-origin: left center;
+  background: transparent;
+  padding: 0 4px;
+}
+
+/* Float label on focus or when input has value */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: 12px;
+  transform: translateY(0) scale(0.78);
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+/* Error state */
+.input-group.error input {
+  border-color: var(--error);
+  box-shadow: var(--shadow-glow-error);
+}
+
+.input-group.error label {
+  color: var(--error);
+}
+
+/* Success state */
+.input-group.success input {
+  border-color: var(--success);
+  box-shadow: var(--shadow-glow-success);
+}
+
+.input-group.success label {
+  color: var(--success);
+}
+
+/* ── Error message ── */
+.input-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 6px;
+  padding-left: 4px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: var(--transition-fast);
+}
+
+.input-error.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.input-error i {
+  font-size: 14px;
+}
+
+/* ── Password toggle ── */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 52px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--text-placeholder);
+  transition: var(--transition-fast);
+  z-index: 2;
+}
+
+.password-toggle:hover {
+  background: var(--bg-surface);
+  color: var(--primary-blue);
+}
+
+/* ── Password Strength Bar ── */
+.password-strength {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.strength-bar-track {
+  height: 4px;
+  border-radius: 4px;
+  background: #E5E7EB;
+  overflow: hidden;
+}
+
+.strength-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.4s var(--ease-smooth), background 0.4s var(--ease-smooth);
+}
+
+.strength-bar-fill.weak        { width: 25%; background: var(--error); }
+.strength-bar-fill.fair        { width: 50%; background: var(--warning); }
+.strength-bar-fill.good        { width: 75%; background: var(--primary-blue); }
+.strength-bar-fill.strong      { width: 100%; background: var(--success); }
+
+.strength-label {
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  text-align: right;
+  transition: color 0.3s;
+}
+
+.strength-label.weak   { color: var(--error); }
+.strength-label.fair   { color: var(--warning); }
+.strength-label.good   { color: var(--primary-blue); }
+.strength-label.strong { color: var(--success); }
+
+/* ============================================================
+   8. BUTTONS
+   ============================================================ */
+
+/* ── Primary Button ── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  border-radius: var(--radius-btn);
+  padding: 16px 24px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-bounce), box-shadow var(--transition-normal), opacity var(--transition-normal);
+  box-shadow: 0 6px 20px rgba(91, 141, 239, 0.25);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(91, 141, 239, 0.35);
+}
+
+.btn-primary:hover::before { opacity: 1; }
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* ── Button loading spinner ── */
+.btn-primary .spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.btn-primary.loading .btn-text { opacity: 0; }
+.btn-primary.loading .spinner  { display: block; position: absolute; }
+.btn-primary.loading { pointer-events: none; }
+
+/* ── Secondary / Outline Button ── */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: var(--radius-btn);
+  padding: 16px 24px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 16px;
+  border: 1.5px solid #E5E7EB;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* ── Ghost Button ── */
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-btn);
+  padding: 14px 24px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 15px;
+  transition: var(--transition-normal);
+}
+
+.btn-ghost:hover {
+  color: var(--primary-blue);
+  background: rgba(91, 141, 239, 0.06);
+}
+
+/* ── Social Login Buttons ── */
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.btn-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1.5px solid #E5E7EB;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-social:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+  border-color: #D1D5DB;
+}
+
+.btn-social:active {
+  transform: scale(0.97);
+}
+
+.btn-social img,
+.btn-social svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============================================================
+   9. DIVIDER
+   ============================================================ */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E5E7EB;
+}
+
+.divider span {
+  font-size: 13px;
+  color: var(--text-placeholder);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   10. CHECKBOX
+   ============================================================ */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #D1D5DB;
+  border-radius: 7px;
+  flex-shrink: 0;
+  position: relative;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+  background: var(--gradient-primary);
+  border-color: var(--primary-blue);
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-group span {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   11. OTP INPUTS
+   ============================================================ */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: var(--space-lg) 0;
+}
+
+.otp-input {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-otp);
+  border: 2px solid #E5E7EB;
+  background: var(--bg-card);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+  transition: var(--transition-normal);
+  caret-color: var(--primary-blue);
+}
+
+.otp-input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-glow-blue);
+  transform: scale(1.05);
+}
+
+.otp-input.filled {
+  border-color: var(--primary-blue);
+  background: var(--bg-surface);
+}
+
+.otp-input.error {
+  border-color: var(--error);
+  box-shadow: var(--shadow-glow-error);
+  animation: shake 0.4s ease;
+}
+
+.otp-input.success {
+  border-color: var(--success);
+  box-shadow: var(--shadow-glow-success);
+}
+
+/* ============================================================
+   12. INTEREST CHIPS
+   ============================================================ */
+.interests-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.interest-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1.5px solid #E5E7EB;
+  background: var(--bg-card);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(91,141,239,0.04);
+}
+
+.interest-chip i {
+  font-size: 18px;
+  transition: var(--transition-normal);
+}
+
+.interest-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.interest-chip:active {
+  transform: scale(0.96);
+}
+
+.interest-chip.selected {
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(91,141,239,0.3);
+}
+
+.interest-chip.selected i {
+  color: #fff;
+}
+
+/* ============================================================
+   13. SUCCESS CHECKMARK
+   ============================================================ */
+.success-icon-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-lg);
+  position: relative;
+  box-shadow: 0 12px 40px rgba(91,141,239,0.3);
+}
+
+.success-icon-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(91,141,239,0.15);
+  animation: pulse-ring 2s infinite;
+}
+
+.checkmark-svg {
+  width: 56px;
+  height: 56px;
+}
+
+.checkmark-svg .checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: rgba(255,255,255,0.3);
+  fill: none;
+  animation: stroke-draw 0.8s ease-in-out forwards;
+}
+
+.checkmark-svg .checkmark-check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  animation: stroke-draw 0.5s 0.4s ease-in-out forwards;
+}
+
+/* ============================================================
+   14. SPLASH SCREEN
+   ============================================================ */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--gradient-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+}
+
+.splash-screen.hide {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.splash-logo {
+  position: relative;
+  margin-bottom: var(--space-xl);
+}
+
+.splash-logo-icon {
+  width: 90px;
+  height: 90px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  animation: float 3s ease-in-out infinite;
+}
+
+.splash-logo-letter {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Glow ring behind the logo */
+.splash-logo::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 40px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.splash-brand {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.splash-tagline {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 400;
+}
+
+.splash-loader {
+  position: absolute;
+  bottom: 80px;
+  display: flex;
+  gap: 8px;
+}
+
+.splash-loader span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  animation: bounce-dots 1.4s infinite ease-in-out;
+}
+
+.splash-loader span:nth-child(1) { animation-delay: 0s; }
+.splash-loader span:nth-child(2) { animation-delay: 0.2s; }
+.splash-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ============================================================
+   15. WELCOME SCREEN HERO
+   ============================================================ */
+.welcome-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-xxl) 0 var(--space-lg);
+}
+
+/* ── Brand logo (purple circle with letter) ── */
+.welcome-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.brand-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(91,141,239,0.3);
+  flex-shrink: 0;
+}
+
+.brand-logo-letter {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.welcome-title {
+  margin-bottom: 0;
+}
+
+.welcome-subtitle {
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* ── Welcome card (bottom section) ── */
+.welcome-card {
+  width: 100%;
+  margin-top: auto;
+}
+
+.welcome-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+/* ── Horizontal social row (Google OR Facebook) ── */
+.social-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.social-buttons-row .btn-social {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.social-or {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-placeholder);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   16. PAGE-SPECIFIC HELPERS
+   ============================================================ */
+.screen-header {
+  margin-bottom: var(--space-lg);
+}
+
+.screen-header .heading-screen {
+  margin-bottom: var(--space-xs);
+}
+
+.screen-header p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.form-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-blue);
+  transition: var(--transition-fast);
+}
+
+.form-link:hover {
+  color: var(--secondary-purple);
+}
+
+.form-bottom-text {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: var(--space-lg);
+}
+
+.form-bottom-text a {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+/* ── Timer ── */
+.otp-timer {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.otp-timer .timer-value {
+  font-weight: 600;
+  color: var(--primary-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-resend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  padding: 8px 0;
+}
+
+.btn-resend:disabled {
+  color: var(--text-placeholder);
+  cursor: default;
+}
+
+.btn-resend:not(:disabled):hover {
+  color: var(--secondary-purple);
+}
+
+/* ── Interests counter ── */
+.interests-counter {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.interests-counter strong {
+  color: var(--primary-blue);
+}
+
+/* ============================================================
+   17. SUCCESS SCREEN
+   ============================================================ */
+.success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+}
+
+.success-greeting {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.success-message {
+  color: var(--text-secondary);
+  font-size: 16px;
+  max-width: 300px;
+  margin: 0 auto var(--space-xl);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   18. ANIMATIONS — Keyframes
+   ============================================================ */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.08); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes bounce-dots {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+@keyframes stroke-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Animation utility classes ── */
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-smooth) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s var(--ease-smooth) both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s var(--ease-bounce) both;
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.5s var(--ease-smooth) both;
+}
+
+/* Staggered animation delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+.delay-8 { animation-delay: 0.8s; }
+
+/* ============================================================
+   19. PAGE TRANSITION OVERLAY
+   ============================================================ */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--bg-main);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.page-transition.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   20. TOAST / INLINE ALERTS
+   ============================================================ */
+.toast {
+  position: fixed;
+  top: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--bg-card);
+  border-radius: var(--radius-btn);
+  padding: 14px 24px;
+  box-shadow: var(--shadow-float);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-normal);
+  max-width: 380px;
+  border-left: 4px solid var(--primary-blue);
+}
+
+.toast.success { border-left-color: var(--success); }
+.toast.error   { border-left-color: var(--error); }
+.toast.warning { border-left-color: var(--warning); }
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: all;
+}
+
+/* ============================================================
+   21. RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+
+/* Tablet & desktop — center the shell with a background */
+@media (min-width: 480px) {
+  body {
+    background:
+      linear-gradient(135deg, rgba(91,141,239,0.04) 0%, rgba(175,165,255,0.04) 100%),
+      var(--bg-main);
+  }
+
+  .app-shell {
+    margin: 20px auto;
+    border-radius: 36px;
+    min-height: calc(100vh - 40px);
+    box-shadow: 0 20px 60px rgba(91,141,239,0.1);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+
+  .screen {
+    min-height: calc(100vh - 40px);
+  }
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    margin: 40px auto;
+    min-height: calc(100vh - 80px);
+  }
+
+  .screen {
+    min-height: calc(100vh - 80px);
+  }
+}
+
+/* Small mobile tweaks */
+@media (max-width: 374px) {
+  :root {
+    --space-lg: 20px;
+    --space-xl: 28px;
+  }
+
+  .heading-hero { font-size: 30px; }
+  .heading-screen { font-size: 24px; }
+
+  .otp-input {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .otp-container { gap: 8px; }
+
+  .welcome-illustration {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* ============================================================
+   22. UTILITY CLASSES
+   ============================================================ */
+.mt-xs  { margin-top: var(--space-xs); }
+.mt-sm  { margin-top: var(--space-sm); }
+.mt-md  { margin-top: var(--space-md); }
+.mt-lg  { margin-top: var(--space-lg); }
+.mt-xl  { margin-top: var(--space-xl); }
+.mt-xxl { margin-top: var(--space-xxl); }
+
+.mb-xs  { margin-bottom: var(--space-xs); }
+.mb-sm  { margin-bottom: var(--space-sm); }
+.mb-md  { margin-bottom: var(--space-md); }
+.mb-lg  { margin-bottom: var(--space-lg); }
+.mb-xl  { margin-bottom: var(--space-xl); }
+
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+
+.w-full { width: 100%; }
+
+.hidden { display: none !important; }
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
